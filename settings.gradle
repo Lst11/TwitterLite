@@ -1,0 +1,3 @@
+include ':presentation', ':data', ':domain', ':lib', ':data2', ':data', ':domain'
+rootProject.name='TwitterLite'
+
