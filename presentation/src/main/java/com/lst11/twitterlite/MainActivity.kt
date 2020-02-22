@@ -21,10 +21,8 @@ class MainActivity : AppCompatActivity() {
             "First Item",
             "Second Item",
             "Third Item",
-            "The end",
-            "The end",
-            "The end",
-            "The end",
+            "Forth Item",
+            "Fifth Item",
             "The end"
         )
 
