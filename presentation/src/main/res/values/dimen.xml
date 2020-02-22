@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_height">50dp</dimen>
+    <dimen name="icon_width">50sp</dimen>
+    <dimen name="picture_height">150sp</dimen>
+    <dimen name="fragment_padding">10sp</dimen>
+</resources>

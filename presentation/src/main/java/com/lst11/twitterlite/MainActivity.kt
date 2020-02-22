@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lst11.twitterlite.recyclerView.PostItemAdapter
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
@@ -20,6 +21,10 @@ class MainActivity : AppCompatActivity() {
             "First Item",
             "Second Item",
             "Third Item",
+            "The end",
+            "The end",
+            "The end",
+            "The end",
             "The end"
         )
 
