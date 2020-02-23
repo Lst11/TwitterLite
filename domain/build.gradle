@@ -20,5 +20,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(path: ":data")
+
+    //Realtime Database
+    implementation 'com.google.firebase:firebase-database:16.0.4'
 }
