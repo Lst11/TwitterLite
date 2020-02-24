@@ -4,12 +4,11 @@ import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
 
 @IgnoreExtraProperties
-class User(private var name: String) : Serializable {
-    private var id: Long = 0
-    private var imageLink: String = ""
-    private var posts: List<Post> = emptyList()
-    private var followers: List<User> = emptyList()
-    private var following: List<User> = emptyList()
-
-    constructor () : this("")
+class User : Serializable {
+    var name: String = ""
+    var id: String = ""
+    var imageLink: String = ""
+    // var posts: List<Post> = emptyList()
+    var followers: List<User> = emptyList()
+    var following: List<User> = emptyList()
 }
