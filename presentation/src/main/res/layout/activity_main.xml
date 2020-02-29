@@ -9,8 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlue"
+        android:minHeight="?attr/actionBarSize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/TwitterLiteActionBar"
         app:title="@string/app_name" />
 
     <androidx.recyclerview.widget.RecyclerView
