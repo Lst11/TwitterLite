@@ -1,4 +1,4 @@
-package com.lst11.twitterlite.view
+package com.lst11.twitterlite.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

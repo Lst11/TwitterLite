@@ -1,4 +1,4 @@
-package com.lst11.twitterlite.recyclerView;
+package com.lst11.twitterlite.view.recyclerView;
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

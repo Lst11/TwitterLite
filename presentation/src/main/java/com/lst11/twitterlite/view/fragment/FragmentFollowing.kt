@@ -1,4 +1,4 @@
-package com.lst11.twitterlite.view
+package com.lst11.twitterlite.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment
 import com.lst11.twitterlite.R
 
 
-class FragmentCreatePost : Fragment() {
+class FragmentFollowing : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_create_post, container, false)
+        return inflater.inflate(R.layout.fragment_following, container, false)
     }
 
 }
