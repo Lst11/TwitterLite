@@ -22,6 +22,7 @@ android {
 dependencies {
     api project(path: ":data")
 
-    //Realtime Database
-    implementation 'com.google.firebase:firebase-database:16.0.4'
+    //Dagger
+    implementation "javax.inject:javax.inject:1"
+
 }

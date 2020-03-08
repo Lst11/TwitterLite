@@ -1,10 +1,8 @@
 package com.lst11.twitterlite
 
-import com.google.firebase.database.FirebaseDatabase
+import javax.inject.Inject
 
-class UserService(database: FirebaseDatabase) {
-
-    private var repository: UserRepository = UserRepository(database)
+class UserService @Inject constructor(private var repository: UserRepository) {
 
     fun addUser(userName: String) {
         repository.addUser(userName)

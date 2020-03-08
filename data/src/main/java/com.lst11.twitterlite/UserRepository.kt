@@ -3,10 +3,10 @@ package com.lst11.twitterlite
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.lst11.twitterlite.model.User
+import javax.inject.Inject
 
-class UserRepository(database: FirebaseDatabase) {
+class UserRepository @Inject constructor(private var database: FirebaseDatabase) {
 
-    private lateinit var database: FirebaseDatabase
     private var reference: DatabaseReference = database.getReference("user")
 
     fun addUser(userName: String) {
