@@ -7,8 +7,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/posts"
         android:layout_width="match_parent"
-        android:background="@color/colorWhite"
         android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/fragment_padding"
         android:scrollbars="vertical"
         app:layout_constraintTop_toTopOf="parent" />
 

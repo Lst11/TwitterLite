@@ -83,21 +83,21 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:layout_weight="1"
-            android:text="@string/user_twits_button" />
+            android:text="@string/posts_menu_item" />
 
         <RadioButton
             android:id="@+id/radio_blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/following_twits_button" />
+            android:text="@string/following_menu_item" />
 
         <RadioButton
             android:id="@+id/radio_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/followers_twits_button" />
+            android:text="@string/followers_menu_item" />
 
     </RadioGroup>
 
