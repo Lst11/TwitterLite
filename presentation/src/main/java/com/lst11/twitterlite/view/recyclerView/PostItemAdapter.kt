@@ -1,4 +1,4 @@
-package com.lst11.twitterlite.view.recyclerView;
+package com.lst11.twitterlite.view.recyclerView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.lst11.twitterlite.R
 
-class PostItemAdapter(private val myDataset: List<String>) :
+class PostItemAdapter(private var itemList: MutableList<String> = mutableListOf()) :
     RecyclerView.Adapter<PostItemAdapter.MyViewHolder>() {
 
     class MyViewHolder(postItem: ConstraintLayout) : RecyclerView.ViewHolder(postItem)
@@ -23,8 +23,27 @@ class PostItemAdapter(private val myDataset: List<String>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val textView = holder.itemView.findViewById<TextView>(R.id.profile_name_text)
-        textView.text = myDataset[position]
+        textView.text = itemList[position]
     }
 
-    override fun getItemCount() = myDataset.size
+    override fun getItemCount() = itemList.size
+
+
+    fun addItems(items: List<String>) {
+        val startPos = itemList.size
+        itemList.addAll(items)
+        notifyItemRangeChanged(startPos, items.size)
+    }
+
+    fun resetItems(items: List<String>) {
+        cleanItems()
+        val startPos = itemList.size
+        itemList.addAll(items)
+        notifyItemRangeChanged(startPos, items.size)
+    }
+
+    private fun cleanItems() {
+        itemList.clear()
+        notifyDataSetChanged()
+    }
 }
