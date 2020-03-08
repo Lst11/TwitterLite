@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.FirebaseDatabase
 import com.lst11.twitterlite.R
-import com.lst11.twitterlite.UserService
+import com.lst11.twitterlite.app.App
+import com.lst11.twitterlite.presenter.PostsPresenter
 import com.lst11.twitterlite.view.recyclerView.PostItemAdapter
-
+import javax.inject.Inject
 
 class FragmentPosts : Fragment() {
 
@@ -19,12 +19,11 @@ class FragmentPosts : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    //TODO: move to dagger dependency
-    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private var userService: UserService
+    @Inject
+    lateinit var presenter: PostsPresenter
 
     init {
-        userService = UserService(database)
+        App.appComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -38,21 +37,10 @@ class FragmentPosts : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userService.addUser("Test one")
-        userService.addUser("Test two")
-        userService.addUser("Test three")
-
-        val myDataset = listOf(
-            "First Item",
-            "Second Item",
-            "Third Item",
-            "Forth Item",
-            "Fifth Item",
-            "The end"
-        )
+        val posts = presenter.uploadPosts();
 
         viewManager = LinearLayoutManager(view.context)
-        viewAdapter = PostItemAdapter(myDataset)
+        viewAdapter = PostItemAdapter(posts)
 
         recyclerView = getView()!!.findViewById<RecyclerView>(R.id.posts).apply {
             setHasFixedSize(true)
@@ -61,5 +49,4 @@ class FragmentPosts : Fragment() {
             adapter = viewAdapter
         }
     }
-
 }
