@@ -1,20 +1,14 @@
 package com.lst11.twitterlite.presenter
 
 import android.content.Context
-import com.google.firebase.database.FirebaseDatabase
 import com.lst11.twitterlite.R
 import com.lst11.twitterlite.UserService
 import javax.inject.Inject
 
-class ProfilePresenter @Inject constructor(private val context: Context) {
-
-    //TODO: move to dagger dependency
-    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+class ProfilePresenter @Inject constructor(
+    private val context: Context,
     private var userService: UserService
-
-    init {
-        userService = UserService(database)
-    }
+) {
 
     fun buttonClicked(buttonName: String): List<String> {
         when (buttonName) {
