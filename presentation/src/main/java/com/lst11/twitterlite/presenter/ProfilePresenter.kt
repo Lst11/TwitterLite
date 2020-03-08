@@ -12,14 +12,14 @@ class ProfilePresenter @Inject constructor(
 
     fun buttonClicked(buttonName: String): List<String> {
         when (buttonName) {
-            context.resources.getString(R.string.user_twits_button) -> {
+            context.resources.getString(R.string.posts_menu_item) -> {
                 return uploadUserPosts()
             }
 
-            context.resources.getString(R.string.following_twits_button) -> {
+            context.resources.getString(R.string.following_menu_item) -> {
                 return uploadFollowingPosts()
             }
-            context.resources.getString(R.string.followers_twits_button) -> {
+            context.resources.getString(R.string.followers_menu_item) -> {
                 return uploadFollowersPosts()
             }
             else -> {

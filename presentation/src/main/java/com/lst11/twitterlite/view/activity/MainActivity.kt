@@ -20,10 +20,12 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 class MainActivity : AppCompatActivity() {
 
     // Menu positions of buttons on the toolbar
+    private val createPost = 0
     private val profileMenuPosition = 1
     private val postsMeuPosition = 3
     private val followingMenuPosition = 4
     private val followersMenuPosition = 5
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListenerToTheCreatePostButton() {
+        findViewById<Toolbar>(R.id.toolbar).title = changeTitleOnClick(createPost)
+
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
         val fragmentCreatePost = FragmentCreatePost()
@@ -62,16 +66,26 @@ class MainActivity : AppCompatActivity() {
         toolbar: Toolbar,
         accountHeader: AccountHeader
     ) {
-        val itemProfile: PrimaryDrawerItem = createPrimaryDrawerItem("Profile")
+        val itemProfile: PrimaryDrawerItem =
+            createPrimaryDrawerItem(resources.getString(R.string.profile_menu_item))
 
         val itemHome: SecondaryDrawerItem =
-            createSecondaryDrawerItem("Posts", FontAwesome.Icon.faw_comment_alt1)
+            createSecondaryDrawerItem(
+                resources.getString(R.string.posts_menu_item),
+                FontAwesome.Icon.faw_comment_alt1
+            )
 
         val itemFollowing: SecondaryDrawerItem =
-            createSecondaryDrawerItem("Following", FontAwesome.Icon.faw_user_friends)
+            createSecondaryDrawerItem(
+                resources.getString(R.string.following_menu_item),
+                FontAwesome.Icon.faw_user_friends
+            )
 
         val itemFollowers: SecondaryDrawerItem =
-            createSecondaryDrawerItem("Followers", FontAwesome.Icon.faw_users)
+            createSecondaryDrawerItem(
+                resources.getString(R.string.followers_menu_item),
+                FontAwesome.Icon.faw_users
+            )
 
         val driver = DrawerBuilder().withActivity(this)
             .withToolbar(toolbar)
@@ -90,6 +104,7 @@ class MainActivity : AppCompatActivity() {
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
                     startFragmentOnClick(position)
+                    toolbar.title = changeTitleOnClick(position)
                     return true
                 }
 
@@ -97,6 +112,18 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         driver.addStickyFooterItem(PrimaryDrawerItem().withName("Support"))
+    }
+
+    private fun changeTitleOnClick(position: Int): String {
+
+        return when (position) {
+            createPost -> resources.getString(R.string.new_post_item)
+            profileMenuPosition -> resources.getString(R.string.profile_menu_item)
+            postsMeuPosition -> resources.getString(R.string.posts_menu_item)
+            followingMenuPosition -> resources.getString(R.string.following_menu_item)
+            followersMenuPosition -> resources.getString(R.string.followers_menu_item)
+            else -> resources.getString(R.string.app_name)
+        }
     }
 
     private fun createSecondaryDrawerItem(
