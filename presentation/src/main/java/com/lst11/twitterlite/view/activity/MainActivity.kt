@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val createPostButton = findViewById<FloatingActionButton>(R.id.create_post_button)
+        val createPostButton = findViewById<FloatingActionButton>(R.id.post_action_button)
 
         createPostButton.setOnClickListener {
             setListenerToTheCreatePostButton()
@@ -45,8 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
-        val fragmentCreatePost = FragmentCreatePost()
-        transaction.replace(R.id.layoutMain, fragmentCreatePost)
+        startFragmentOnClick(createPost)
         transaction.commit()
     }
 
@@ -143,6 +142,11 @@ class MainActivity : AppCompatActivity() {
         val transaction = manager.beginTransaction()
 
         when (position) {
+            createPost -> {
+                val fragmentCreatePost = FragmentCreatePost()
+                transaction.replace(R.id.layoutMain, fragmentCreatePost)
+            }
+
             profileMenuPosition -> {
                 val fragmentProfile = FragmentProfile()
                 transaction.replace(R.id.layoutMain, fragmentProfile)
@@ -162,7 +166,17 @@ class MainActivity : AppCompatActivity() {
                 transaction.replace(R.id.layoutMain, fragmentFollowers)
             }
         }
+        hideActionButton(position)
 
         transaction.commit()
+    }
+
+    private fun hideActionButton(position: Int) {
+        val button = findViewById<View>(R.id.post_action_button)
+
+        when (position) {
+            createPost -> button.visibility = View.GONE
+            else -> button.visibility = View.VISIBLE
+        }
     }
 }
