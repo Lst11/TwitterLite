@@ -27,6 +27,9 @@ dependencies {
     //Realtime Database
     implementation 'com.google.firebase:firebase-database:16.0.4'
 
+    //Dagger
+    implementation "javax.inject:javax.inject:1"
+
     //Tests
     testImplementation('junit:junit:4.13')
     testImplementation 'org.codehaus.groovy:groovy:2.4.7:grooid'

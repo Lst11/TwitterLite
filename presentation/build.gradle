@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -17,6 +19,7 @@ android {
 
     buildTypes {
         release {
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -27,6 +30,8 @@ dependencies {
     implementation project(path: ":domain")
 
     def androidSupportVersion = "28.0.0"
+    def dagger_version = "2.16"
+
 
     // UI Components
     implementation "com.android.support:appcompat-v7:$androidSupportVersion"
@@ -43,4 +48,9 @@ dependencies {
 
     //Realtime Database
     implementation 'com.google.firebase:firebase-database:16.0.4'
+
+    // dagger 2
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 }
