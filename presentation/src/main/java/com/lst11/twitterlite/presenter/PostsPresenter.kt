@@ -15,10 +15,10 @@ class PostsPresenter @Inject constructor() {
         userService = UserService(database)
     }
 
-    fun uploadPosts(): List<String> {
-        userService.addUser("Test one")
-        userService.addUser("Test two")
-        userService.addUser("Test three")
+    fun uploadPosts(): MutableList<String> {
+//        userService.addUser("Test one")
+//        userService.addUser("Test two")
+//        userService.addUser("Test three")
 
         return listOf(
             "First Item",
@@ -27,7 +27,7 @@ class PostsPresenter @Inject constructor() {
             "Forth Item",
             "Fifth Item",
             "The end"
-        )
+        ).toMutableList()
     }
 }
 

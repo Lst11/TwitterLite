@@ -37,7 +37,7 @@ class FragmentPosts : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val posts = presenter.uploadPosts();
+        val posts = presenter.uploadPosts()
 
         viewManager = LinearLayoutManager(view.context)
         viewAdapter = PostItemAdapter(posts)
