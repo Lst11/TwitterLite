@@ -19,6 +19,7 @@
 
     <TextView
         android:id="@+id/profile_name_text"
+        style="@style/text_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fragment_padding"
@@ -29,40 +30,48 @@
 
     <TextView
         android:id="@+id/following_text"
+        style="@style/text_regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fragment_padding"
         android:text="Folowing: "
+        android:textSize="@dimen/text_size_middle"
         app:layout_constraintEnd_toStartOf="@+id/following_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_name_text" />
 
     <TextView
         android:id="@+id/following_number"
+        style="@style/text_regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fragment_padding"
         android:text="100"
+        android:textSize="@dimen/text_size_middle"
         app:layout_constraintEnd_toStartOf="@+id/followers_text"
         app:layout_constraintStart_toEndOf="@+id/following_text"
         app:layout_constraintTop_toBottomOf="@+id/profile_name_text" />
 
     <TextView
         android:id="@+id/followers_text"
+        style="@style/text_regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fragment_padding"
         android:text="Followers:"
+        android:textSize="@dimen/text_size_middle"
         app:layout_constraintEnd_toStartOf="@+id/followers_number"
         app:layout_constraintStart_toEndOf="@+id/following_number"
         app:layout_constraintTop_toBottomOf="@+id/profile_name_text" />
 
     <TextView
         android:id="@+id/followers_number"
+        style="@style/text_regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fragment_padding"
         android:text="200"
+        android:textSize="@dimen/text_size_middle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/followers_text"
         app:layout_constraintTop_toBottomOf="@+id/profile_name_text" />
@@ -79,25 +88,31 @@
 
         <RadioButton
             android:id="@+id/radio_red"
+            style="@style/text_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:layout_weight="1"
-            android:text="@string/posts_menu_item" />
+            android:checked="true"
+            android:text="@string/posts_menu_item"
+            android:textSize="@dimen/text_size_small" />
 
         <RadioButton
             android:id="@+id/radio_blue"
+            style="@style/text_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/following_menu_item" />
+            android:text="@string/following_menu_item"
+            android:textSize="@dimen/text_size_small" />
 
         <RadioButton
             android:id="@+id/radio_gray"
+            style="@style/text_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/followers_menu_item" />
+            android:text="@string/followers_menu_item"
+            android:textSize="@dimen/text_size_small" />
 
     </RadioGroup>
 
@@ -105,7 +120,7 @@
         android:id="@+id/posts"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorWhite"
+        android:background="@color/colorFloatingActionButtonIcon"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

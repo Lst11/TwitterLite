@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">TwitterLite</string>
+    <string name="app_name">Twitter Lite</string>
     <string name="profile_image">Profile image for user</string>
     <string name="profile_name">Profile name</string>
     <string name="post_description">Post description</string>
+    <string name="user_description">User description</string>
     <string name="following_menu_item">Following</string>
     <string name="followers_menu_item">Followers</string>
     <string name="profile_menu_item">Profile</string>

@@ -4,4 +4,8 @@
     <dimen name="icon_width">50sp</dimen>
     <dimen name="picture_height">150sp</dimen>
     <dimen name="fragment_padding">10sp</dimen>
+
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_middle">15sp</dimen>
+    <dimen name="text_size_small">11sp</dimen>
 </resources>
