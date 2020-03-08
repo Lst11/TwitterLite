@@ -3,4 +3,7 @@
     <string name="profile_image">Profile image for user</string>
     <string name="profile_name">Profile name</string>
     <string name="post_description">Post description</string>
+    <string name="user_twits_button">Twits</string>
+    <string name="following_twits_button">Following</string>
+    <string name="followers_twits_button">Followers</string>
 </resources>
