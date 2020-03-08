@@ -17,7 +17,8 @@
 
     <FrameLayout
         android:id="@+id/layoutMain"
-        android:layout_marginTop="?android:attr/actionBarSize"
+        android:paddingTop="?android:attr/actionBarSize"
+        android:layout_marginTop="@dimen/fragment_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

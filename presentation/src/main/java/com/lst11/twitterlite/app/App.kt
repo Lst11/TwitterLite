@@ -1,8 +1,8 @@
 package com.lst11.twitterlite.app
 
 import android.app.Application
-import com.gmail.superarch.inject.DaggerAppComponent
 import com.lst11.twitterlite.dagger.AppComponent
+import com.lst11.twitterlite.dagger.DaggerAppComponent
 import com.lst11.twitterlite.dagger.PresenterModule
 
 
