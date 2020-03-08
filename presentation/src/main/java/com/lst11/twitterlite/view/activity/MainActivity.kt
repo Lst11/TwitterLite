@@ -1,7 +1,6 @@
 package com.lst11.twitterlite.view.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,9 +17,13 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 
-
 class MainActivity : AppCompatActivity() {
 
+    // Menu positions of buttons on the toolbar
+    private val profileMenuPosition = 1
+    private val postsMeuPosition = 3
+    private val followingMenuPosition = 4
+    private val followersMenuPosition = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +32,21 @@ class MainActivity : AppCompatActivity() {
         val createPostButton = findViewById<FloatingActionButton>(R.id.create_post_button)
 
         createPostButton.setOnClickListener {
-            val manager = supportFragmentManager
-            val transaction = manager.beginTransaction()
-            val fragmentCreatePost = FragmentCreatePost()
-            transaction.replace(R.id.layoutMain, fragmentCreatePost)
-            transaction.commit()
+            setListenerToTheCreatePostButton()
         }
 
+        setUpToolbar()
+    }
+
+    private fun setListenerToTheCreatePostButton() {
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        val fragmentCreatePost = FragmentCreatePost()
+        transaction.replace(R.id.layoutMain, fragmentCreatePost)
+        transaction.commit()
+    }
+
+    private fun setUpToolbar() {
         val accountHeader: AccountHeader = AccountHeaderBuilder()
             .withActivity(this)
             .withHeaderBackground(R.drawable.user_default)
@@ -44,20 +55,23 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
-        val itemProfile: PrimaryDrawerItem = PrimaryDrawerItem()
-            .withName("Profile")
+        setUpMenu(toolbar, accountHeader)
+    }
 
-        val itemHome: SecondaryDrawerItem = SecondaryDrawerItem()
-            .withName("Posts")
-            .withIcon(FontAwesome.Icon.faw_comment_alt1)
+    private fun setUpMenu(
+        toolbar: Toolbar,
+        accountHeader: AccountHeader
+    ) {
+        val itemProfile: PrimaryDrawerItem = createPrimaryDrawerItem("Profile")
 
-        val itemFollowing: SecondaryDrawerItem = SecondaryDrawerItem()
-            .withName("Following")
-            .withIcon(FontAwesome.Icon.faw_user_friends)
+        val itemHome: SecondaryDrawerItem =
+            createSecondaryDrawerItem("Posts", FontAwesome.Icon.faw_comment_alt1)
 
-        val itemFollowers: SecondaryDrawerItem = SecondaryDrawerItem()
-            .withName("Followers")
-            .withIcon(FontAwesome.Icon.faw_users)
+        val itemFollowing: SecondaryDrawerItem =
+            createSecondaryDrawerItem("Following", FontAwesome.Icon.faw_user_friends)
+
+        val itemFollowers: SecondaryDrawerItem =
+            createSecondaryDrawerItem("Followers", FontAwesome.Icon.faw_users)
 
         val driver = DrawerBuilder().withActivity(this)
             .withToolbar(toolbar)
@@ -75,8 +89,7 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    Log.d("DRAWER", "Clicked on position $position")
-                    startFragment(position)
+                    startFragmentOnClick(position)
                     return true
                 }
 
@@ -86,27 +99,38 @@ class MainActivity : AppCompatActivity() {
         driver.addStickyFooterItem(PrimaryDrawerItem().withName("Support"))
     }
 
-    private fun startFragment(position: Int) {
+    private fun createSecondaryDrawerItem(
+        text: String,
+        image: FontAwesome.Icon
+    ): SecondaryDrawerItem {
+        return SecondaryDrawerItem()
+            .withName(text)
+            .withIcon(image)
+    }
 
+    private fun createPrimaryDrawerItem(text: String) = PrimaryDrawerItem()
+        .withName(text)
+
+    private fun startFragmentOnClick(position: Int) {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
 
         when (position) {
-            1 -> {
+            profileMenuPosition -> {
                 val fragmentProfile = FragmentProfile()
                 transaction.replace(R.id.layoutMain, fragmentProfile)
             }
 
-            3 -> {
+            postsMeuPosition -> {
                 val fragmentHome = FragmentPosts()
                 transaction.replace(R.id.layoutMain, fragmentHome)
             }
-            4 -> {
+            followingMenuPosition -> {
                 val fragmentFollowing = FragmentFollowing()
                 transaction.replace(R.id.layoutMain, fragmentFollowing)
 
             }
-            5 -> {
+            followersMenuPosition -> {
                 val fragmentFollowers = FragmentFollowers()
                 transaction.replace(R.id.layoutMain, fragmentFollowers)
             }
