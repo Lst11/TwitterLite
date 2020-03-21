@@ -1,6 +1,7 @@
 package com.lst11.twitterlite.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lst11.twitterlite.R
+import com.lst11.twitterlite.app.App
+import com.lst11.twitterlite.presenter.FollowingPresenter
 import com.lst11.twitterlite.view.recyclerView.UserItemAdapter
+import io.reactivex.rxkotlin.subscribeBy
+import javax.inject.Inject
 
 
 class FragmentFollowing : Fragment() {
@@ -17,6 +22,12 @@ class FragmentFollowing : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
+    @Inject
+    lateinit var presenter: FollowingPresenter
+
+    init {
+        App.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,16 +40,8 @@ class FragmentFollowing : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val following = listOf(
-            "Following #1",
-            "Following #2",
-            "Following #3",
-            "Following #4",
-            "Following #5"
-        )
-
         viewManager = LinearLayoutManager(view.context)
-        viewAdapter = UserItemAdapter(following as MutableList<String>)
+        viewAdapter = UserItemAdapter(mutableListOf())
 
         recyclerView = getView()!!.findViewById<RecyclerView>(R.id.posts).apply {
             setHasFixedSize(true)
@@ -46,7 +49,24 @@ class FragmentFollowing : Fragment() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        subscribeOnFollowing()
     }
 
+    private fun subscribeOnFollowing() {
+        var disposable = presenter.uploadFollowing().subscribeBy(
+            onNext = {
+                Log.e("aaa", "Following - onNext: $it")
 
+                val result = mutableListOf<String>()
+                for (item in it) {
+                    result.add(item.name)
+                }
+                (viewAdapter as UserItemAdapter).resetItems(result)
+                viewAdapter.notifyDataSetChanged()
+            },
+            onError = {
+                Log.e("aaa", "Error")
+            })
+    }
 }
