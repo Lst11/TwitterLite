@@ -1,5 +1,6 @@
 package com.lst11.twitterlite.view.recyclerView
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -24,6 +25,8 @@ class UserItemAdapter(private var itemList: MutableList<String> = mutableListOf(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val textView = holder.itemView.findViewById<TextView>(R.id.profile_name_text)
         textView.text = itemList[position]
+        Log.e("aaa", "Adapter position: $position")
+
     }
 
     override fun getItemCount() = itemList.size
@@ -35,11 +38,9 @@ class UserItemAdapter(private var itemList: MutableList<String> = mutableListOf(
         notifyItemRangeChanged(startPos, items.size)
     }
 
-    fun resetItems(items: List<String>) {
-        cleanItems()
-        val startPos = itemList.size
-        itemList.addAll(items)
-        notifyItemRangeChanged(startPos, items.size)
+    fun resetItems(items: MutableList<String>) {
+        itemList = items
+        notifyItemRangeChanged(itemList.size, items.size)
     }
 
     private fun cleanItems() {
