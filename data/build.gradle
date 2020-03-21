@@ -27,14 +27,17 @@ dependencies {
     //Realtime Database
     implementation 'com.google.firebase:firebase-database:16.0.4'
 
+    //RX
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
     //Dagger
     implementation "javax.inject:javax.inject:1"
 
     //Tests
     testImplementation('junit:junit:4.13')
-    testImplementation 'org.codehaus.groovy:groovy:2.4.7:grooid'
-    testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
-        exclude group: 'org.codehaus.groovy'
-        exclude group: 'junit'
-    }
+//    testImplementation 'org.codehaus.groovy:groovy:2.4.7:grooid'
+//    testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+//        exclude group: 'org.codehaus.groovy'
+//        exclude group: 'junit'
+//    }
 }

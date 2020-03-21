@@ -25,4 +25,7 @@ dependencies {
     //Dagger
     implementation "javax.inject:javax.inject:1"
 
+    //RX
+    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+    api 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 }
