@@ -1,11 +1,15 @@
 package com.lst11.twitterlite.dagger
 
 import android.content.Context
+import com.example.lena.finalapp.executor.UIThread
 import com.google.firebase.database.FirebaseDatabase
-import com.lst11.twitterlite.UserRepository
 import com.lst11.twitterlite.UserService
+import com.lst11.twitterlite.executor.PostExecutorThread
+import com.lst11.twitterlite.presenter.FollowersPresenter
+import com.lst11.twitterlite.presenter.FollowingPresenter
 import com.lst11.twitterlite.presenter.PostsPresenter
 import com.lst11.twitterlite.presenter.ProfilePresenter
+import com.lst11.twitterlite.user.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -23,15 +27,29 @@ class PresenterModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideUserRepository(): UserRepository = UserRepository(provideDatabase())
+    fun providePostExecutorThread(): PostExecutorThread = UIThread()
 
     @Provides
     @Singleton
-    fun provideUserService(): UserService = UserService(provideUserRepository())
+    fun provideUserRepository(): UserRepository =
+        UserRepository(provideDatabase())
+
+    @Provides
+    @Singleton
+    fun provideUserService(): UserService =
+        UserService(provideUserRepository(), providePostExecutorThread())
 
     @Provides
     @Singleton
     fun providePostsPresenter(): PostsPresenter = PostsPresenter(provideUserService())
+
+    @Provides
+    @Singleton
+    fun provideFollowingPresenter(): FollowingPresenter = FollowingPresenter(provideUserService())
+
+    @Provides
+    @Singleton
+    fun provideFollowersPresenter(): FollowersPresenter = FollowersPresenter(provideUserService())
 
     @Provides
     @Singleton
