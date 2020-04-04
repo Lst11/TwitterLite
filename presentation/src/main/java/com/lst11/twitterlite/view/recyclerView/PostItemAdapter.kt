@@ -41,7 +41,7 @@ class PostItemAdapter(
         val descriptionTextView = holder.itemView.findViewById<TextView>(R.id.post_description_text)
         descriptionTextView.text = itemList[position].description
 
-        val imageUrl: String = itemList[position].imageUrl
+        val imageUrl: String = itemList[position].getImageUrl()
 
         if (imageUrl.isNotEmpty()) {
             uploadImage(holder, imageUrl)

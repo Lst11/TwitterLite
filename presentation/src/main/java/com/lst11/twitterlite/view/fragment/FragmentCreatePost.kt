@@ -1,13 +1,13 @@
 package com.lst11.twitterlite.view.fragment
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -17,6 +17,7 @@ import com.lst11.twitterlite.app.App
 import com.lst11.twitterlite.presenter.PostPresenter
 import com.lst11.twitterlite.user.model.Post
 import com.lst11.twitterlite.view.activity.MainActivity
+import kotlinx.android.synthetic.main.fragment_create_post.*
 import javax.inject.Inject
 
 
@@ -33,6 +34,8 @@ class FragmentCreatePost : Fragment() {
     @Inject
     lateinit var presenter: PostPresenter
 
+    private var bitmapImage: Bitmap? = null
+
     private val PICK_IMAGE = 100
 
     init {
@@ -42,18 +45,14 @@ class FragmentCreatePost : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val createPostButton = getView()?.findViewById<FloatingActionButton>(R.id.save_button)
-        setClickListener(createPostButton)
+        setClickListener(save_button)
 
-        val uploadButton = getView()?.findViewById<ImageButton>(R.id.uploadFileButton)
-
-        uploadButton?.setOnClickListener {
-            openGallery()
+        upload_file_button?.setOnClickListener {
+            getFileFromGallery()
         }
-
     }
 
-    private fun openGallery() {
+    private fun getFileFromGallery() {
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         startActivityForResult(gallery, PICK_IMAGE)
     }
@@ -61,10 +60,10 @@ class FragmentCreatePost : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        val returnUri = data?.data
-        val bitmapImage =
-            MediaStore.Images.Media.getBitmap(activity!!.contentResolver, returnUri)
-        Log.e("aaa", " File is here ")
+        val returnUri: Uri? = data?.data
+        bitmapImage = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, returnUri)
+
+        post_image.setImageBitmap(bitmapImage)
     }
 
     private fun setClickListener(createPostButton: FloatingActionButton?) {
@@ -72,10 +71,9 @@ class FragmentCreatePost : Fragment() {
 
             val newPost = getPostFromFields()
             if (newPost.title.isNotBlank() && newPost.description.isNotBlank()) {
-                presenter.savePost(newPost)
+                presenter.savePost(newPost, bitmapImage)
                 val activity = (activity as MainActivity)
                 activity.backToMain()
-
             } else {
                 val toast =
                     Toast.makeText(context, "The fields should not be empty!", Toast.LENGTH_SHORT)
@@ -91,8 +89,6 @@ class FragmentCreatePost : Fragment() {
         val descriptionTextView = view?.findViewById<TextView>(R.id.post_description_text)
         val description = descriptionTextView?.text.toString()
 
-        val imageUrl = ""
-
-        return Post(title, description, imageUrl)
+        return Post(title, description)
     }
 }

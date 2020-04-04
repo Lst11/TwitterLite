@@ -39,7 +39,7 @@ class FragmentPosts : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val posts = presenter.uploadPosts()
+        val posts = presenter.downloadPosts()
 
         viewManager = LinearLayoutManager(view.context)
         viewAdapter = PostItemAdapter(mutableListOf(), context!!)
@@ -55,7 +55,7 @@ class FragmentPosts : Fragment() {
     }
 
     private fun subscribeOnPosts() {
-        var disposable = presenter.uploadPosts().subscribeBy(
+        var disposable = presenter.downloadPosts().subscribeBy(
             onNext = {
                 Log.e("aaa", "Posts - onNext: $it")
 
