@@ -14,12 +14,6 @@ class UserService @Inject constructor(
 
     var userId = "-M2wiAj6RvDYWYGVR_Ng"
 
-//    fun getUser(userName: String): Observable<User> {
-//        return repository.getUser(userId)
-//            .observeOn(postExecutorThread)
-//            .subscribeOn(workExecutorThread)
-//    }
-
     fun getFollowing(): Observable<MutableList<User>> {
         return repository.getFollowing(userId)
             .observeOn(postExecutorThread)
@@ -28,6 +22,12 @@ class UserService @Inject constructor(
 
     fun getFollowers(): Observable<MutableList<User>> {
         return repository.getFollowers(userId)
+            .observeOn(postExecutorThread)
+            .subscribeOn(workExecutorThread)
+    }
+
+    fun getPosts(): Observable<MutableList<Post>> {
+        return repository.getUserPosts(userId)
             .observeOn(postExecutorThread)
             .subscribeOn(workExecutorThread)
     }

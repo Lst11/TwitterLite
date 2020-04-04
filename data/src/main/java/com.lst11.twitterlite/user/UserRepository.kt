@@ -75,7 +75,6 @@ class UserRepository @Inject constructor(private var database: FirebaseDatabase)
                         Log.d(ContentValues.TAG, "Followers: uploading data")
                     }
                     followersObservable.onNext(following)
-
                 }
             }
 
@@ -84,49 +83,33 @@ class UserRepository @Inject constructor(private var database: FirebaseDatabase)
         return followersObservable
     }
 
+    fun getUserPosts(userId: String): PublishSubject<MutableList<Post>> {
+        val postsObservable: PublishSubject<MutableList<Post>> = PublishSubject.create()
 
-//    fun getUserPosts(userId: String): PublishSubject<MutableList<Post>>{
-//        val postsObservable: PublishSubject<MutableList<Post>> = PublishSubject.create()
-//
-//        reference.child(userId).addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val followingList = snapshot.child("posts").children
-//                var following = mutableListOf<Post>()
-//
-//                for (followingItem in followingList) {
-//
-//                    val follower = followingItem.getValue(User::class.java)
-//                    if (follower != null) {
-//                        following.add(follower)
-//                        Log.d(ContentValues.TAG, "Followers: uploading data")
-//                    }
-//                    followersObservable.onNext(following)
-//
-//                }
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {}
-//        })
-//
-//        return postsObservable
-//
-//    }
+        reference.child(userId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val postsList = snapshot.child("posts").children
+                var posts = mutableListOf<Post>()
+
+                for (followingItem in postsList) {
+
+                    val post = followingItem.getValue(Post::class.java)
+                    if (post != null) {
+                        posts.add(post)
+                        Log.d(ContentValues.TAG, "Posts: uploading data")
+                    }
+                    postsObservable.onNext(posts)
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+
+        return postsObservable
+    }
 
     fun savePost(userId: String, post: Post) {
         reference.child(userId).child("posts").push().setValue(post)
     }
-
-//    fun getUser(userId: String): Observable<User> {
-//        val userObservable: PublishSubject<User> = PublishSubject.create()
-//        reference.child(userId).addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val user: User = snapshot.getValue(User::class.java)!!
-//                userObservable.onNext(user)
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {}
-//        })
-//
-//        return userObservable
-//    }
 }

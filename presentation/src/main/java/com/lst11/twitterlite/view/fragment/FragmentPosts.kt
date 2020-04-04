@@ -1,6 +1,7 @@
 package com.lst11.twitterlite.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.lst11.twitterlite.R
 import com.lst11.twitterlite.app.App
 import com.lst11.twitterlite.presenter.PostPresenter
 import com.lst11.twitterlite.view.recyclerView.PostItemAdapter
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class FragmentPosts : Fragment() {
@@ -40,7 +42,7 @@ class FragmentPosts : Fragment() {
         val posts = presenter.uploadPosts()
 
         viewManager = LinearLayoutManager(view.context)
-        viewAdapter = PostItemAdapter(posts)
+        viewAdapter = PostItemAdapter(mutableListOf(), context!!)
 
         recyclerView = getView()!!.findViewById<RecyclerView>(R.id.posts).apply {
             setHasFixedSize(true)
@@ -48,5 +50,20 @@ class FragmentPosts : Fragment() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        subscribeOnPosts()
+    }
+
+    private fun subscribeOnPosts() {
+        var disposable = presenter.uploadPosts().subscribeBy(
+            onNext = {
+                Log.e("aaa", "Posts - onNext: $it")
+
+                (viewAdapter as PostItemAdapter).resetItems(it)
+                viewAdapter.notifyDataSetChanged()
+            },
+            onError = {
+                Log.e("aaa", "Error")
+            })
     }
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lst11.twitterlite.R
 import com.lst11.twitterlite.app.App
@@ -41,23 +40,23 @@ class FragmentProfile : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val posts = presenter.uploadUserPosts()
-
-        viewManager = LinearLayoutManager(view.context)
-        viewAdapter = PostItemAdapter(posts)
-
-        recyclerView = getView()!!.findViewById<RecyclerView>(R.id.posts).apply {
-            setHasFixedSize(true)
-
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
+//
+//        viewManager = LinearLayoutManager(view.context)
+//        viewAdapter = PostItemAdapter(mutableListOf(), )
+//
+//        recyclerView = getView()!!.findViewById<RecyclerView>(R.id.posts).apply {
+//            setHasFixedSize(true)
+//
+//            layoutManager = viewManager
+//            adapter = viewAdapter
+//        }
 
         val radioGroup = getView()?.findViewById<RadioGroup>(R.id.bottom_group)
 
         radioGroup?.setOnCheckedChangeListener { _, checkedId ->
             val radio = getView()?.findViewById<RadioButton>(checkedId)
             val posts = presenter.buttonClicked(radio?.text as String)
-            (viewAdapter as PostItemAdapter).resetItems(posts)
+            (viewAdapter as PostItemAdapter).resetItems(mutableListOf())
             viewAdapter.notifyDataSetChanged()
         }
     }
