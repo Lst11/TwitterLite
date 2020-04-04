@@ -27,6 +27,9 @@ dependencies {
     //Realtime Database
     implementation 'com.google.firebase:firebase-database:16.0.4'
 
+    //Storage
+    api 'com.google.firebase:firebase-storage:16.0.4'
+
     //RX
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
