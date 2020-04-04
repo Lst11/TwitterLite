@@ -1,5 +1,6 @@
 package com.lst11.twitterlite
 
+import android.net.Uri
 import com.lst11.twitterlite.executor.PostExecutorThread
 import com.lst11.twitterlite.user.UserRepository
 import com.lst11.twitterlite.user.model.Post
@@ -34,5 +35,22 @@ class UserService @Inject constructor(
 
     fun savePost(post: Post) {
         repository.savePost(userId, post)
+    }
+
+    fun uploadFileFromByteArray(bytes: ByteArray, imageId: String): Observable<Uri> {
+        var imagePath = userId + imageId
+
+        return repository.saveToStorage(bytes, imagePath)
+            .observeOn(postExecutorThread)
+            .subscribeOn(workExecutorThread)
+    }
+
+    fun getImageUrl(imageId: String): Observable<String> {
+        var imagePath = userId + imageId
+
+        return repository.getFileUrl(imagePath)
+            .observeOn(postExecutorThread)
+            .subscribeOn(workExecutorThread)
+
     }
 }
