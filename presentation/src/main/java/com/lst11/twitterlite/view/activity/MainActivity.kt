@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
+
         startFragmentOnClick(createPost)
         transaction.commit()
     }
@@ -166,17 +167,25 @@ class MainActivity : AppCompatActivity() {
                 transaction.replace(R.id.layoutMain, fragmentFollowers)
             }
         }
-        hideActionButton(position)
+        resetActionButton(position)
 
         transaction.commit()
     }
 
-    private fun hideActionButton(position: Int) {
+    private fun resetActionButton(position: Int) {
         val button = findViewById<View>(R.id.post_action_button)
 
         when (position) {
             createPost -> button.visibility = View.GONE
             else -> button.visibility = View.VISIBLE
         }
+    }
+
+    fun backToMain() {
+        findViewById<Toolbar>(R.id.toolbar).title = changeTitleOnClick(postsMeuPosition)
+
+        val transaction = supportFragmentManager.beginTransaction()
+        startFragmentOnClick(postsMeuPosition)
+        transaction.commit()
     }
 }
