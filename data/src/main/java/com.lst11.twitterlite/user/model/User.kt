@@ -7,6 +7,7 @@ import java.io.Serializable
 class User(var name: String = "") : Serializable {
     var id: String = ""
     var imageLink: String = ""
+    var status: String = ""
     var posts: List<Post> = emptyList()
     var followers: List<User> = emptyList()
     var following: List<User> = emptyList()
