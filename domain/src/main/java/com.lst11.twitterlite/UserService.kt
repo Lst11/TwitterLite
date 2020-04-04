@@ -2,6 +2,7 @@ package com.lst11.twitterlite
 
 import com.lst11.twitterlite.executor.PostExecutorThread
 import com.lst11.twitterlite.user.UserRepository
+import com.lst11.twitterlite.user.model.Post
 import com.lst11.twitterlite.user.model.User
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -13,11 +14,11 @@ class UserService @Inject constructor(
 
     var userId = "-M2wiAj6RvDYWYGVR_Ng"
 
-    fun getUser(userName: String): Observable<User> {
-        return repository.getUser(userId)
-            .observeOn(postExecutorThread)
-            .subscribeOn(workExecutorThread)
-    }
+//    fun getUser(userName: String): Observable<User> {
+//        return repository.getUser(userId)
+//            .observeOn(postExecutorThread)
+//            .subscribeOn(workExecutorThread)
+//    }
 
     fun getFollowing(): Observable<MutableList<User>> {
         return repository.getFollowing(userId)
@@ -29,5 +30,9 @@ class UserService @Inject constructor(
         return repository.getFollowers(userId)
             .observeOn(postExecutorThread)
             .subscribeOn(workExecutorThread)
+    }
+
+    fun savePost(post: Post) {
+        repository.savePost(userId, post)
     }
 }

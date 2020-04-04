@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lst11.twitterlite.R
 import com.lst11.twitterlite.app.App
-import com.lst11.twitterlite.presenter.PostsPresenter
+import com.lst11.twitterlite.presenter.PostPresenter
 import com.lst11.twitterlite.view.recyclerView.PostItemAdapter
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class FragmentPosts : Fragment() {
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     @Inject
-    lateinit var presenter: PostsPresenter
+    lateinit var presenter: PostPresenter
 
     init {
         App.appComponent.inject(this)

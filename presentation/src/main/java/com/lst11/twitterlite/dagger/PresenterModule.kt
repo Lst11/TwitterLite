@@ -7,7 +7,7 @@ import com.lst11.twitterlite.UserService
 import com.lst11.twitterlite.executor.PostExecutorThread
 import com.lst11.twitterlite.presenter.FollowersPresenter
 import com.lst11.twitterlite.presenter.FollowingPresenter
-import com.lst11.twitterlite.presenter.PostsPresenter
+import com.lst11.twitterlite.presenter.PostPresenter
 import com.lst11.twitterlite.presenter.ProfilePresenter
 import com.lst11.twitterlite.user.UserRepository
 import dagger.Module
@@ -41,7 +41,7 @@ class PresenterModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun providePostsPresenter(): PostsPresenter = PostsPresenter(provideUserService())
+    fun providePostsPresenter(): PostPresenter = PostPresenter(provideUserService())
 
     @Provides
     @Singleton
