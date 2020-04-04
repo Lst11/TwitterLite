@@ -42,7 +42,7 @@ class FragmentFollowers : Fragment() {
 
 
         viewManager = LinearLayoutManager(view.context)
-        viewAdapter = UserItemAdapter(mutableListOf())
+        viewAdapter = UserItemAdapter(mutableListOf(), context!!)
 
         recyclerView = getView()!!.findViewById<RecyclerView>(R.id.posts).apply {
             setHasFixedSize(true)
@@ -59,11 +59,7 @@ class FragmentFollowers : Fragment() {
             onNext = {
                 Log.e("aaa", "Followers - onNext: $it")
 
-                val result = mutableListOf<String>()
-                for (item in it) {
-                    result.add(item.name)
-                }
-                (viewAdapter as UserItemAdapter).resetItems(result)
+                (viewAdapter as UserItemAdapter).resetItems(it)
                 viewAdapter.notifyDataSetChanged()
             },
             onError = {

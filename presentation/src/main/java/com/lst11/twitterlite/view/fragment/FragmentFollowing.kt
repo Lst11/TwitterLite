@@ -41,7 +41,7 @@ class FragmentFollowing : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewManager = LinearLayoutManager(view.context)
-        viewAdapter = UserItemAdapter(mutableListOf())
+        viewAdapter = UserItemAdapter(mutableListOf(), context!!)
 
         recyclerView = getView()!!.findViewById<RecyclerView>(R.id.posts).apply {
             setHasFixedSize(true)
@@ -58,11 +58,7 @@ class FragmentFollowing : Fragment() {
             onNext = {
                 Log.e("aaa", "Following - onNext: $it")
 
-                val result = mutableListOf<String>()
-                for (item in it) {
-                    result.add(item.name)
-                }
-                (viewAdapter as UserItemAdapter).resetItems(result)
+                (viewAdapter as UserItemAdapter).resetItems(it)
                 viewAdapter.notifyDataSetChanged()
             },
             onError = {
