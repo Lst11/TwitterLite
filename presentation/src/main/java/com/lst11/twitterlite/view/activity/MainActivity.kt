@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     // Menu positions of buttons on the toolbar
     private val createPost = 0
     private val profileMenuPosition = 1
-    private val postsMeuPosition = 3
+    private val postsMenuPosition = 3
     private val followingMenuPosition = 4
     private val followersMenuPosition = 5
 
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setUpToolbar()
+        startFragment(postsMenuPosition)
     }
 
     private fun setListenerToTheCreatePostButton() {
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
 
-        startFragmentOnClick(createPost)
+        startFragment(createPost)
         transaction.commit()
     }
 
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    startFragmentOnClick(position)
+                    startFragment(position)
                     toolbar.title = changeTitleOnClick(position)
                     return true
                 }
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         return when (position) {
             createPost -> resources.getString(R.string.new_post_item)
             profileMenuPosition -> resources.getString(R.string.profile_menu_item)
-            postsMeuPosition -> resources.getString(R.string.posts_menu_item)
+            postsMenuPosition -> resources.getString(R.string.posts_menu_item)
             followingMenuPosition -> resources.getString(R.string.following_menu_item)
             followersMenuPosition -> resources.getString(R.string.followers_menu_item)
             else -> resources.getString(R.string.app_name)
@@ -138,7 +139,7 @@ class MainActivity : AppCompatActivity() {
     private fun createPrimaryDrawerItem(text: String) = PrimaryDrawerItem()
         .withName(text)
 
-    private fun startFragmentOnClick(position: Int) {
+    private fun startFragment(position: Int) {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
 
@@ -153,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                 transaction.replace(R.id.layoutMain, fragmentProfile)
             }
 
-            postsMeuPosition -> {
+            postsMenuPosition -> {
                 val fragmentHome = FragmentPosts()
                 transaction.replace(R.id.layoutMain, fragmentHome)
             }
@@ -182,10 +183,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun backToMain() {
-        findViewById<Toolbar>(R.id.toolbar).title = changeTitleOnClick(postsMeuPosition)
+        findViewById<Toolbar>(R.id.toolbar).title = changeTitleOnClick(postsMenuPosition)
 
         val transaction = supportFragmentManager.beginTransaction()
-        startFragmentOnClick(postsMeuPosition)
+        startFragment(postsMenuPosition)
         transaction.commit()
     }
 }
