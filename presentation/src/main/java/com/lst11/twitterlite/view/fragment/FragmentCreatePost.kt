@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.lst11.twitterlite.R
@@ -41,10 +42,19 @@ class FragmentCreatePost : Fragment() {
         createPostButton?.setOnClickListener {
 
             val newPost = getPostFromFields()
-            presenter.savePost(newPost)
+            if (newPost.imageUrl.isNotBlank() &&
+                newPost.imageUrl.isNotBlank() &&
+                newPost.imageUrl.isNotBlank()
+            ) {
+                presenter.savePost(newPost)
+                val activity = (activity as MainActivity)
+                activity.backToMain()
 
-            val activity = (activity as MainActivity)
-            activity.backToMain()
+            } else {
+                val toast =
+                    Toast.makeText(context, "The fields should not be empty!", Toast.LENGTH_SHORT)
+                toast.show()
+            }
         }
     }
 
