@@ -3,6 +3,7 @@ package com.lst11.twitterlite.dagger
 import android.content.Context
 import com.example.lena.finalapp.executor.UIThread
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.lst11.twitterlite.UserService
 import com.lst11.twitterlite.executor.PostExecutorThread
 import com.lst11.twitterlite.presenter.FollowersPresenter
@@ -27,12 +28,16 @@ class PresenterModule(private val context: Context) {
 
     @Provides
     @Singleton
+    fun provideStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    @Singleton
     fun providePostExecutorThread(): PostExecutorThread = UIThread()
 
     @Provides
     @Singleton
     fun provideUserRepository(): UserRepository =
-        UserRepository(provideDatabase())
+        UserRepository(provideDatabase(), provideStorage())
 
     @Provides
     @Singleton
