@@ -149,4 +149,67 @@ class UserRepository @Inject constructor(
         return imageUriObservable
     }
 
+    fun getUserName(userId: String): PublishSubject<String> {
+        val nameObservable: PublishSubject<String> = PublishSubject.create()
+
+        reference.child(userId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userName = snapshot.child("name").getValue(String::class.java)
+
+                nameObservable.onNext(userName.toString())
+                Log.e("aaa", " username $userName ")
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+        return nameObservable
+    }
+
+    fun getUserImage(userId: String): PublishSubject<String> {
+        val urlObservable: PublishSubject<String> = PublishSubject.create()
+
+        reference.child(userId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var imageUrl = snapshot.child("imageLink").getValue(String::class.java)
+
+                urlObservable.onNext(imageUrl.toString())
+                Log.e("aaa", " imageLink $imageUrl ")
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+        return urlObservable
+    }
+
+    fun getFollowersNumber(userId: String): PublishSubject<String> {
+        val followersObservable: PublishSubject<String> = PublishSubject.create()
+
+        reference.child(userId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val followersSize = snapshot.child("followers").childrenCount
+                followersObservable.onNext(followersSize.toString())
+                Log.e("aaa", " followers size $followersSize")
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+        return followersObservable
+    }
+
+    fun getFollowingNumber(userId: String): PublishSubject<String> {
+        val followingObservable: PublishSubject<String> = PublishSubject.create()
+
+        reference.child(userId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val followingsSize = snapshot.child("following").childrenCount
+                followingObservable.onNext(followingsSize.toString())
+                Log.e("aaa", " Following size $followingsSize")
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+        return followingObservable
+    }
 }

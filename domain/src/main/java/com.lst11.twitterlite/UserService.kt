@@ -51,6 +51,29 @@ class UserService @Inject constructor(
         return repository.getFileUrl(imagePath)
             .observeOn(postExecutorThread)
             .subscribeOn(workExecutorThread)
+    }
 
+    fun getUserName(): Observable<String> {
+        return repository.getUserName(userId)
+            .observeOn(postExecutorThread)
+            .subscribeOn(workExecutorThread)
+    }
+
+    fun getUserImageLink(): Observable<String> {
+        return repository.getUserImage(userId)
+            .observeOn(postExecutorThread)
+            .subscribeOn(workExecutorThread)
+    }
+
+    fun getFollowersNumber(): Observable<String> {
+        return repository.getFollowersNumber(userId)
+            .observeOn(postExecutorThread)
+            .subscribeOn(workExecutorThread)
+    }
+
+    fun getFollowingNumber(): Observable<String> {
+        return repository.getFollowingNumber(userId)
+            .observeOn(postExecutorThread)
+            .subscribeOn(workExecutorThread)
     }
 }

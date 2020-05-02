@@ -1,25 +1,28 @@
 package com.lst11.twitterlite.view.fragment
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.lst11.twitterlite.R
 import com.lst11.twitterlite.app.App
 import com.lst11.twitterlite.presenter.ProfilePresenter
-import com.lst11.twitterlite.view.recyclerView.PostItemAdapter
+import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 import javax.inject.Inject
 
 
 class FragmentProfile : Fragment() {
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
 
     @Inject
     lateinit var presenter: ProfilePresenter
@@ -39,25 +42,75 @@ class FragmentProfile : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val posts = presenter.uploadUserPosts()
-//
-//        viewManager = LinearLayoutManager(view.context)
-//        viewAdapter = PostItemAdapter(mutableListOf(), )
-//
-//        recyclerView = getView()!!.findViewById<RecyclerView>(R.id.posts).apply {
-//            setHasFixedSize(true)
-//
-//            layoutManager = viewManager
-//            adapter = viewAdapter
-//        }
+        setUserName(view)
+        setUserImage(view)
+        setFollowersNumber(view)
+        setFollowingNumber(view)
+    }
 
-        val radioGroup = getView()?.findViewById<RadioGroup>(R.id.bottom_group)
+    private fun setUserName(view: View) {
+        var userName = presenter.uploadUserName()
+        userName.subscribeBy(
+            onNext = {
+                view.profile_name_text.text = it
+            }
+        )
+    }
 
-        radioGroup?.setOnCheckedChangeListener { _, checkedId ->
-            val radio = getView()?.findViewById<RadioButton>(checkedId)
-            val posts = presenter.buttonClicked(radio?.text as String)
-            (viewAdapter as PostItemAdapter).resetItems(mutableListOf())
-            viewAdapter.notifyDataSetChanged()
-        }
+    private fun setUserImage(view: View) {
+        var imageLink = presenter.uploadUserImageUrl()
+        imageLink.subscribeBy(
+            onNext = {
+
+                val imageView = view.findViewById<ImageView>(R.id.user_image)
+                val progressBar = view.findViewById<ProgressBar>(R.id.progress)
+
+                Glide
+                    .with(view.context)
+                    .load(it)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            progressBar.visibility = View.GONE
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            progressBar.visibility = View.GONE
+                            return false
+                        }
+                    })
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(imageView)
+            }
+        )
+    }
+
+    private fun setFollowersNumber(view: View) {
+        var userName = presenter.uploadFollowersNumber()
+        userName.subscribeBy(
+            onNext = {
+                view.followers_number.text = it
+            }
+        )
+    }
+
+    private fun setFollowingNumber(view: View) {
+        var userName = presenter.uploadFollowingNumber()
+        userName.subscribeBy(
+            onNext = {
+                view.following_number.text = it
+            }
+        )
     }
 }

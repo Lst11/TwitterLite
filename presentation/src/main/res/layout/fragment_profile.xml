@@ -5,8 +5,27 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/fragment_padding">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/fragment_padding"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/startHorizontal" />
+
     <ImageView
-        android:id="@+id/image_layout"
+        android:id="@+id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/fragment_padding"
@@ -15,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/startHorizontal" />
 
     <TextView
         android:id="@+id/profile_name_text"
@@ -26,7 +45,7 @@
         android:text="@string/profile_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/user_image" />
 
     <TextView
         android:id="@+id/following_text"
@@ -34,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fragment_padding"
+        android:layout_marginBottom="@dimen/fragment_padding"
         android:text="Folowing: "
         android:textSize="@dimen/text_size_middle"
         app:layout_constraintEnd_toStartOf="@+id/following_number"
@@ -48,8 +68,8 @@
         android:layout_margin="@dimen/fragment_padding"
         android:text="100"
         android:textSize="@dimen/text_size_middle"
-        app:layout_constraintEnd_toStartOf="@+id/followers_text"
-        app:layout_constraintStart_toEndOf="@+id/following_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/following_text"
         app:layout_constraintTop_toBottomOf="@+id/profile_name_text" />
 
     <TextView
@@ -60,9 +80,9 @@
         android:layout_margin="@dimen/fragment_padding"
         android:text="Followers:"
         android:textSize="@dimen/text_size_middle"
-        app:layout_constraintEnd_toStartOf="@+id/followers_number"
-        app:layout_constraintStart_toEndOf="@+id/following_number"
-        app:layout_constraintTop_toBottomOf="@+id/profile_name_text" />
+        app:layout_constraintEnd_toStartOf="@id/followers_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/following_text" />
 
     <TextView
         android:id="@+id/followers_number"
@@ -73,58 +93,7 @@
         android:text="200"
         android:textSize="@dimen/text_size_middle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/followers_text"
-        app:layout_constraintTop_toBottomOf="@+id/profile_name_text" />
-
-    <RadioGroup
-        android:id="@+id/bottom_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fragment_padding"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/following_text">
-
-        <RadioButton
-            android:id="@+id/radio_red"
-            style="@style/text_regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="@string/posts_menu_item"
-            android:textSize="@dimen/text_size_small" />
-
-        <RadioButton
-            android:id="@+id/radio_blue"
-            style="@style/text_regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/following_menu_item"
-            android:textSize="@dimen/text_size_small" />
-
-        <RadioButton
-            android:id="@+id/radio_gray"
-            style="@style/text_regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/followers_menu_item"
-            android:textSize="@dimen/text_size_small" />
-
-    </RadioGroup>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/posts"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorFloatingActionButtonIcon"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_group" />
+        app:layout_constraintStart_toEndOf="@id/followers_text"
+        app:layout_constraintTop_toBottomOf="@+id/following_number" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
