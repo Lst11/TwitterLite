@@ -23,21 +23,6 @@ class UserRepository @Inject constructor(
 
     private var mStorageRef = FirebaseStorage.getInstance().reference
 
-    fun addUser(userName: String) {
-        val user = User()
-        user.name = userName
-        user.followers = listOf(
-            User("Follower #100"),
-            User("Follower #101")
-        )
-        user.following = listOf(
-            User("Following #200"),
-            User("Following #200")
-        )
-
-        reference.push().setValue(user)
-    }
-
     fun getFollowing(userId: String): PublishSubject<MutableList<User>> {
         val followingObservable: PublishSubject<MutableList<User>> = PublishSubject.create()
 

@@ -1,11 +1,18 @@
 package com.lst11.twitterlite.view.activity
 
+import android.content.*
+import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.lst11.twitterlite.R
+import com.lst11.twitterlite.service.WifiService
 import com.lst11.twitterlite.view.fragment.*
 import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome
 import com.mikepenz.materialdrawer.AccountHeader
@@ -17,6 +24,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 
+
 class MainActivity : AppCompatActivity() {
 
     // Menu positions of buttons on the toolbar
@@ -27,6 +35,45 @@ class MainActivity : AppCompatActivity() {
     private val followersMenuPosition = 5
     private val supportMenuPosition = -1
 
+    var mService: WifiService? = null
+    var isBound = false
+    private val sConn: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, binder: IBinder) {
+            val localBinder: WifiService.LocalBinder = binder as WifiService.LocalBinder
+            mService = localBinder.getService()
+            isBound = true
+            Log.d("AAA", "onServiceConnected")
+        }
+
+        override fun onServiceDisconnected(className: ComponentName) {
+            Log.d("AAA", "onServiceDisconnected")
+            isBound = false
+        }
+    }
+
+    lateinit var localBroadcastManager: LocalBroadcastManager
+    var wifiStatusButton: ImageButton? = null
+
+    private val listener: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == "NETWORK_AVAILABLE_YES") {
+                changeWifiStatus("ON")
+                Log.d("AAA", "Status changed to: YES")
+            } else {
+                changeWifiStatus("OFF")
+            }
+        }
+    }
+
+    fun changeWifiStatus(message: String?) {
+        val image: Int = when (message) {
+            "ON" -> R.drawable.ic_wifi_on
+            "OFF" -> R.drawable.ic_wifi_off
+            else -> R.drawable.ic_wifi_off
+        }
+
+        wifiStatusButton?.setImageResource(image)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +83,17 @@ class MainActivity : AppCompatActivity() {
 
         createPostButton.setOnClickListener {
             setListenerToTheCreatePostButton()
+        }
+
+        wifiStatusButton = findViewById(R.id.wifi_button)
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(this)
+
+        wifiStatusButton?.setOnClickListener {
+            val wifiManager: WifiManager =
+                applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            mService?.changeWifiStatus(wifiManager)
+            Log.d("AAA", "onClick changeWifiStatus")
         }
 
         setUpToolbar()
@@ -59,9 +117,17 @@ class MainActivity : AppCompatActivity() {
             .withTranslucentStatusBar(true)
             .build()
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setUpWifiButton()
+        setUpMenu(findViewById(R.id.toolbar), accountHeader)
+    }
 
-        setUpMenu(toolbar, accountHeader)
+    private fun setUpWifiButton() {
+        wifiStatusButton?.setOnClickListener {
+            val wifiManager: WifiManager =
+                applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            mService?.changeWifiStatus(wifiManager)
+            Log.d("aaa", "onClick changeWifiStatus")
+        }
     }
 
     private fun setUpMenu(
@@ -195,5 +261,28 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         startFragment(postsMenuPosition)
         transaction.commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var intent: Intent = object : Intent(this, WifiService::class.java) {}
+        bindService(intent, sConn, BIND_AUTO_CREATE)
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("NETWORK_AVAILABLE_YES")
+        intentFilter.addAction("NETWORK_AVAILABLE_NO")
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            listener,
+            intentFilter
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (!isBound) return
+        localBroadcastManager.unregisterReceiver(listener)
+        unbindService(sConn)
+        isBound = false
     }
 }

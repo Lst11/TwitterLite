@@ -14,7 +14,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:theme="@style/TwitterLiteActionBar"
-        app:title="@string/app_name" />
+        app:title="@string/app_name">
+
+        <ImageButton
+            android:id="@+id/wifi_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:layout_marginEnd="@dimen/fragment_padding"
+            app:srcCompat="@drawable/ic_wifi_on"
+            android:text="Button" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/layoutMain"
