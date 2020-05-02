@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private val postsMenuPosition = 3
     private val followingMenuPosition = 4
     private val followersMenuPosition = 5
+    private val supportMenuPosition = -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,6 +124,7 @@ class MainActivity : AppCompatActivity() {
             postsMenuPosition -> resources.getString(R.string.posts_menu_item)
             followingMenuPosition -> resources.getString(R.string.following_menu_item)
             followersMenuPosition -> resources.getString(R.string.followers_menu_item)
+            supportMenuPosition -> resources.getString(R.string.support_menu_item)
             else -> resources.getString(R.string.app_name)
         }
     }
@@ -166,6 +168,11 @@ class MainActivity : AppCompatActivity() {
             followersMenuPosition -> {
                 val fragmentFollowers = FragmentFollowers()
                 transaction.replace(R.id.layoutMain, fragmentFollowers)
+            }
+
+            supportMenuPosition -> {
+                val fragmentSupport = FragmentSupport()
+                transaction.replace(R.id.layoutMain, fragmentSupport)
             }
         }
         resetActionButton(position)

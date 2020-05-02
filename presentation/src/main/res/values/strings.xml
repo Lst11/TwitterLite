@@ -2,10 +2,14 @@
     <string name="app_name">Twitter Lite</string>
     <string name="profile_image">Profile image for user</string>
     <string name="profile_name">Profile name</string>
+    <string name="support_message">Send Your \nComments, Suggestions  &amp; Concerns \nto support@twitter-lite.com</string>
+    <string name="support_details">\n Your feedback is very important to Twitter Lite. It helps us meet our goals of providing safe, reliable, clean and accessible service.
+       \n\n Your comments will be reviewed carefully by the individual management teams.</string>
     <string name="post_description">Post description</string>
     <string name="user_description">User description</string>
     <string name="following_menu_item">Following</string>
     <string name="followers_menu_item">Followers</string>
+    <string name="support_menu_item">Support</string>
     <string name="profile_menu_item">Profile</string>
     <string name="posts_menu_item">Posts</string>
     <string name="new_post_item">New post</string>
