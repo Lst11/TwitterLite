@@ -72,6 +72,7 @@ class PostItemAdapter(
             val postImageView = holder.itemView.findViewById<ImageView>(R.id.post_image)
             val progressBar = holder.itemView.findViewById<ProgressBar>(R.id.progress)
             uploadImage(imageUrl, postImageView, progressBar)
+                .fitCenter()
                 .into(postImageView)
         }
     }

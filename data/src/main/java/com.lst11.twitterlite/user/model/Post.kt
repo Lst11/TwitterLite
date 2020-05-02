@@ -7,7 +7,8 @@ import java.io.Serializable
 class Post(
     var title: String = "",
     var description: String = "",
-    var authorImage: String = ""
+    var authorImage: String = "",
+    var initDate: Long = 0
 ) : Serializable {
 
     private var imageUrl: String = ""

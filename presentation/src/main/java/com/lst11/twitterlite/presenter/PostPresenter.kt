@@ -8,6 +8,7 @@ import com.lst11.twitterlite.user.model.Post
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.subscribeBy
 import java.io.ByteArrayOutputStream
+import java.util.*
 import javax.inject.Inject
 
 class PostPresenter @Inject constructor(private var userService: UserService) {
@@ -25,10 +26,16 @@ class PostPresenter @Inject constructor(private var userService: UserService) {
                 imageUrl.subscribeBy(
                     onNext = { imageLink ->
                         post.setImageUrl(imageLink)
+                        post.authorImage = userService.userImage
+                        post.initDate = getCurrentDate()
                         userService.savePost(post)
                     })
             }
         )
+    }
+
+    private fun getCurrentDate(): Long {
+        return Calendar.getInstance().timeInMillis
     }
 
     private fun uploadImage(bitmapImage: Bitmap?): Observable<Uri> {

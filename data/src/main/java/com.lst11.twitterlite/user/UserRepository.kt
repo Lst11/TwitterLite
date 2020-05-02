@@ -35,7 +35,6 @@ class UserRepository @Inject constructor(
             User("Following #200")
         )
 
-//        //TODO: save unique key
         reference.push().setValue(user)
     }
 
@@ -103,9 +102,9 @@ class UserRepository @Inject constructor(
                         posts.add(post)
                         Log.d(ContentValues.TAG, "Posts: uploading data")
                     }
-                    postsObservable.onNext(posts)
-
                 }
+
+                postsObservable.onNext(posts.sortedBy { myObject -> myObject.initDate }.toMutableList())
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}

@@ -14,6 +14,8 @@ class UserService @Inject constructor(
 ) : BaseService(postExecutorThread) {
 
     var userId = "-M2wiAj6RvDYWYGVR_Ng"
+    var userImage =
+        "\"https://img0.liveinternet.ru/images/attach/c/7/95/100/95100574_4278666_1283476.jpg\""
 
     fun getFollowing(): Observable<MutableList<User>> {
         return repository.getFollowing(userId)
