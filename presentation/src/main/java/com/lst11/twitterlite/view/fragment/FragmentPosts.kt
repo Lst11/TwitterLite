@@ -39,8 +39,6 @@ class FragmentPosts : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val posts = presenter.downloadPosts()
-
         viewManager = LinearLayoutManager(view.context)
         viewAdapter = PostItemAdapter(mutableListOf(), context!!)
 

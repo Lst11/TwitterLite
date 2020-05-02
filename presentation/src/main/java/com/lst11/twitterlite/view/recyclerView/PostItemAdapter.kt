@@ -12,8 +12,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.lst11.twitterlite.R
 import com.lst11.twitterlite.user.model.Post
@@ -41,21 +43,45 @@ class PostItemAdapter(
         val descriptionTextView = holder.itemView.findViewById<TextView>(R.id.post_description_text)
         descriptionTextView.text = itemList[position].description
 
-        val imageUrl: String = itemList[position].getImageUrl()
+        uploadPostImage(position, holder)
 
-        if (imageUrl.isNotEmpty()) {
-            uploadImage(holder, imageUrl)
+        uploadAuthorImage(position, holder)
+    }
+
+    private fun uploadAuthorImage(position: Int, holder: MyViewHolder) {
+        val imageAuthorUrl: String = itemList[position].authorImage
+
+        if (imageAuthorUrl.isNotEmpty()) {
+            val postImageView = holder.itemView.findViewById<ImageView>(R.id.profile_image)
+            val progressBar = holder.itemView.findViewById<ProgressBar>(R.id.progress)
+            uploadImage(imageAuthorUrl, postImageView, progressBar)
+                .apply(RequestOptions.circleCropTransform())
+                .into(postImageView)
         }
     }
 
-    private fun uploadImage(holder: MyViewHolder, imageUrl: String) {
-        val postLayout = holder.itemView.findViewById<RelativeLayout>(R.id.image_layout)
-        postLayout.visibility = View.VISIBLE
+    private fun uploadPostImage(
+        position: Int,
+        holder: MyViewHolder
+    ) {
+        val imageUrl: String = itemList[position].getImageUrl()
 
-        val postImageView = holder.itemView.findViewById<ImageView>(R.id.post_image)
-        val progressBar = holder.itemView.findViewById<ProgressBar>(R.id.progress)
+        if (imageUrl.isNotEmpty()) {
+            val postLayout = holder.itemView.findViewById<RelativeLayout>(R.id.image_layout)
+            postLayout.visibility = View.VISIBLE
+            val postImageView = holder.itemView.findViewById<ImageView>(R.id.post_image)
+            val progressBar = holder.itemView.findViewById<ProgressBar>(R.id.progress)
+            uploadImage(imageUrl, postImageView, progressBar)
+                .into(postImageView)
+        }
+    }
 
-        Glide
+    private fun uploadImage(
+        imageUrl: String,
+        postImageView: ImageView,
+        progressBar: ProgressBar
+    ): RequestBuilder<Drawable> {
+        return Glide
             .with(context)
             .load(imageUrl)
             .centerCrop()
@@ -79,11 +105,9 @@ class PostItemAdapter(
                     isFirstResource: Boolean
                 ): Boolean {
                     progressBar.visibility = View.GONE
-                    postLayout.visibility = View.GONE
                     return false
                 }
             })
-            .into(postImageView)
     }
 
     override fun getItemCount() = itemList.size

@@ -6,7 +6,8 @@ import java.io.Serializable
 @IgnoreExtraProperties
 class Post(
     var title: String = "",
-    var description: String = ""
+    var description: String = "",
+    var authorImage: String = ""
 ) : Serializable {
 
     private var imageUrl: String = ""
